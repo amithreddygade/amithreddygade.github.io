@@ -1,0 +1,619 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Amith Gade – Software Engineer</title>
+<style>
+  :root {
+    --accent: #1a56db;
+    --accent-light: #e8f0fe;
+    --accent-mid: #3b82f6;
+    --dark: #0f172a;
+    --mid: #334155;
+    --muted: #64748b;
+    --border: #e2e8f0;
+    --bg: #f8fafc;
+    --white: #ffffff;
+    --green: #10b981;
+    --purple: #7c3aed;
+    --orange: #f59e0b;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    background: var(--bg);
+    color: var(--dark);
+    line-height: 1.6;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: rgba(255,255,255,0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    padding: 0 2rem;
+    display: flex; align-items: center; justify-content: space-between;
+    height: 60px;
+  }
+  .nav-logo { font-weight: 700; font-size: 1.1rem; color: var(--accent); letter-spacing: -0.5px; }
+  .nav-links { display: flex; gap: 2rem; list-style: none; }
+  .nav-links a { text-decoration: none; color: var(--muted); font-size: 0.9rem; font-weight: 500; transition: color 0.2s; }
+  .nav-links a:hover { color: var(--accent); }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    display: flex; align-items: center;
+    padding: 6rem 2rem 4rem;
+    max-width: 1100px; margin: 0 auto;
+    gap: 4rem;
+  }
+  .hero-text { flex: 1; }
+  .hero-badge {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: var(--accent-light); color: var(--accent);
+    padding: 6px 14px; border-radius: 100px;
+    font-size: 0.8rem; font-weight: 600; margin-bottom: 1.5rem;
+    border: 1px solid #bfdbfe;
+  }
+  .hero-badge span { width: 8px; height: 8px; background: var(--green); border-radius: 50%; animation: pulse 2s infinite; }
+  @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.4} }
+  h1 { font-size: clamp(2.4rem, 5vw, 3.8rem); font-weight: 800; line-height: 1.1; letter-spacing: -1.5px; color: var(--dark); margin-bottom: 0.5rem; }
+  h1 span { color: var(--accent); }
+  .hero-role { font-size: 1.25rem; color: var(--muted); margin-bottom: 1.5rem; font-weight: 400; }
+  .hero-desc { font-size: 1rem; color: var(--mid); max-width: 520px; margin-bottom: 2rem; line-height: 1.8; }
+  .hero-btns { display: flex; gap: 1rem; flex-wrap: wrap; }
+  .btn-primary {
+    background: var(--accent); color: #fff; padding: 12px 24px;
+    border-radius: 10px; text-decoration: none; font-weight: 600; font-size: 0.95rem;
+    transition: background 0.2s, transform 0.1s;
+    display: inline-flex; align-items: center; gap: 8px;
+  }
+  .btn-primary:hover { background: #1741b3; transform: translateY(-1px); }
+  .btn-secondary {
+    background: var(--white); color: var(--dark); padding: 12px 24px;
+    border-radius: 10px; text-decoration: none; font-weight: 600; font-size: 0.95rem;
+    border: 1.5px solid var(--border); transition: border-color 0.2s, transform 0.1s;
+    display: inline-flex; align-items: center; gap: 8px;
+  }
+  .btn-secondary:hover { border-color: var(--accent); transform: translateY(-1px); }
+
+  .hero-avatar {
+    width: 280px; height: 280px; flex-shrink: 0;
+    background: linear-gradient(135deg, var(--accent-light) 0%, #ddd6fe 100%);
+    border-radius: 24px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 7rem; font-weight: 800; color: var(--accent);
+    border: 3px solid var(--border);
+    position: relative; overflow: hidden;
+  }
+  .hero-avatar::after {
+    content: ''; position: absolute; inset: 0;
+    background: repeating-linear-gradient(45deg, transparent, transparent 10px, rgba(255,255,255,0.3) 10px, rgba(255,255,255,0.3) 11px);
+  }
+
+  /* STATS BAR */
+  .stats-bar {
+    background: var(--white);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+  }
+  .stats-inner {
+    max-width: 1100px; margin: 0 auto; padding: 1.5rem 2rem;
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 1rem;
+  }
+  .stat { text-align: center; }
+  .stat-num { font-size: 1.8rem; font-weight: 800; color: var(--accent); line-height: 1; }
+  .stat-label { font-size: 0.78rem; color: var(--muted); font-weight: 500; margin-top: 4px; }
+
+  /* SECTIONS */
+  section { padding: 5rem 2rem; }
+  .section-inner { max-width: 1100px; margin: 0 auto; }
+  .section-tag {
+    display: inline-block; background: var(--accent-light); color: var(--accent);
+    padding: 4px 12px; border-radius: 6px; font-size: 0.75rem; font-weight: 700;
+    text-transform: uppercase; letter-spacing: 1px; margin-bottom: 1rem;
+  }
+  h2 { font-size: clamp(1.6rem, 3vw, 2.2rem); font-weight: 800; letter-spacing: -0.5px; margin-bottom: 0.5rem; }
+  .section-sub { color: var(--muted); font-size: 1rem; margin-bottom: 3rem; }
+
+  /* SKILLS */
+  #skills { background: var(--white); }
+  .skills-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; }
+  .skill-card {
+    background: var(--bg); border: 1.5px solid var(--border);
+    border-radius: 16px; padding: 1.5rem;
+    transition: border-color 0.2s, transform 0.2s;
+  }
+  .skill-card:hover { border-color: var(--accent); transform: translateY(-3px); }
+  .skill-card-icon {
+    width: 44px; height: 44px; border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.3rem; margin-bottom: 1rem;
+  }
+  .skill-card h3 { font-size: 1rem; font-weight: 700; margin-bottom: 0.75rem; color: var(--dark); }
+  .tags { display: flex; flex-wrap: wrap; gap: 6px; }
+  .tag {
+    padding: 4px 10px; border-radius: 6px; font-size: 0.78rem; font-weight: 600;
+    background: var(--white); border: 1px solid var(--border); color: var(--mid);
+  }
+  .tag.blue { background: #eff6ff; color: #1d4ed8; border-color: #bfdbfe; }
+  .tag.green { background: #f0fdf4; color: #166534; border-color: #bbf7d0; }
+  .tag.purple { background: #faf5ff; color: #6d28d9; border-color: #ddd6fe; }
+  .tag.orange { background: #fffbeb; color: #92400e; border-color: #fde68a; }
+
+  /* CERTS */
+  .certs-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1rem; }
+  .cert-card {
+    background: var(--white); border: 1.5px solid var(--border);
+    border-radius: 14px; padding: 1.25rem;
+    display: flex; align-items: flex-start; gap: 12px;
+    transition: border-color 0.2s;
+  }
+  .cert-card:hover { border-color: var(--accent); }
+  .cert-icon {
+    width: 40px; height: 40px; border-radius: 10px; flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center; font-size: 1.2rem;
+  }
+  .cert-card h4 { font-size: 0.88rem; font-weight: 700; color: var(--dark); line-height: 1.3; }
+  .cert-card p { font-size: 0.78rem; color: var(--muted); margin-top: 2px; }
+
+  /* PROJECTS */
+  #projects { background: var(--white); }
+  .projects-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 1.5rem; }
+  .project-card {
+    background: var(--bg); border: 1.5px solid var(--border);
+    border-radius: 18px; padding: 1.75rem; position: relative; overflow: hidden;
+    transition: transform 0.2s, border-color 0.2s;
+  }
+  .project-card:hover { transform: translateY(-4px); border-color: var(--accent); }
+  .project-card::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px;
+  }
+  .project-card.p1::before { background: var(--accent); }
+  .project-card.p2::before { background: var(--green); }
+  .project-card.p3::before { background: var(--purple); }
+  .project-label {
+    font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1px;
+    margin-bottom: 0.75rem; color: var(--muted);
+  }
+  .project-card h3 { font-size: 1.1rem; font-weight: 700; margin-bottom: 0.6rem; color: var(--dark); }
+  .project-card p { font-size: 0.9rem; color: var(--mid); line-height: 1.7; margin-bottom: 1rem; }
+  .project-stack { display: flex; flex-wrap: wrap; gap: 6px; }
+  .stack-pill {
+    padding: 3px 10px; border-radius: 100px; font-size: 0.75rem; font-weight: 600;
+    background: var(--accent-light); color: var(--accent); border: 1px solid #bfdbfe;
+  }
+  .project-link {
+    display: inline-flex; align-items: center; gap: 6px;
+    color: var(--accent); text-decoration: none; font-size: 0.85rem; font-weight: 600;
+    margin-top: 1rem;
+  }
+  .project-link:hover { text-decoration: underline; }
+
+  /* EXPERIENCE */
+  .timeline { position: relative; padding-left: 2rem; }
+  .timeline::before {
+    content: ''; position: absolute; left: 7px; top: 0; bottom: 0;
+    width: 2px; background: var(--border);
+  }
+  .timeline-item { position: relative; margin-bottom: 2.5rem; }
+  .timeline-dot {
+    position: absolute; left: -2rem; top: 6px;
+    width: 16px; height: 16px; border-radius: 50%;
+    background: var(--accent); border: 3px solid var(--white);
+    box-shadow: 0 0 0 2px var(--accent);
+  }
+  .timeline-date { font-size: 0.78rem; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 6px; }
+  .timeline-title { font-size: 1.05rem; font-weight: 700; color: var(--dark); }
+  .timeline-company { font-size: 0.9rem; color: var(--accent); font-weight: 600; margin-bottom: 0.5rem; }
+  .timeline-desc { font-size: 0.9rem; color: var(--mid); line-height: 1.7; }
+  .timeline-desc li { margin-bottom: 4px; }
+
+  /* EDUCATION */
+  #education { background: var(--white); }
+  .edu-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; }
+  .edu-card {
+    background: var(--bg); border: 1.5px solid var(--border);
+    border-radius: 16px; padding: 1.5rem;
+    display: flex; gap: 1rem; align-items: flex-start;
+    transition: border-color 0.2s;
+  }
+  .edu-card:hover { border-color: var(--accent); }
+  .edu-icon {
+    width: 48px; height: 48px; border-radius: 12px; flex-shrink: 0;
+    background: var(--accent-light); display: flex; align-items: center;
+    justify-content: center; font-size: 1.4rem;
+  }
+  .edu-card h3 { font-size: 1rem; font-weight: 700; color: var(--dark); margin-bottom: 4px; }
+  .edu-card p { font-size: 0.85rem; color: var(--muted); }
+  .edu-year { display: inline-block; margin-top: 8px; font-size: 0.78rem; font-weight: 700; color: var(--accent); background: var(--accent-light); padding: 2px 10px; border-radius: 100px; }
+
+  /* CONTACT */
+  #contact { background: var(--dark); color: #fff; }
+  #contact .section-tag { background: rgba(255,255,255,0.1); color: #93c5fd; }
+  #contact h2 { color: #fff; }
+  #contact .section-sub { color: #94a3b8; }
+  .contact-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; }
+  .contact-card {
+    background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 14px; padding: 1.25rem;
+    display: flex; align-items: center; gap: 14px;
+    text-decoration: none; color: #fff;
+    transition: background 0.2s, transform 0.2s;
+  }
+  .contact-card:hover { background: rgba(255,255,255,0.12); transform: translateY(-2px); }
+  .contact-card-icon { font-size: 1.5rem; }
+  .contact-card h4 { font-size: 0.8rem; color: #94a3b8; font-weight: 500; }
+  .contact-card p { font-size: 0.9rem; font-weight: 600; }
+
+  /* FOOTER */
+  footer {
+    background: var(--dark); color: #475569;
+    text-align: center; padding: 1.5rem 2rem;
+    border-top: 1px solid rgba(255,255,255,0.05);
+    font-size: 0.85rem;
+  }
+
+  /* RESPONSIVE */
+  @media (max-width: 768px) {
+    .hero { flex-direction: column-reverse; text-align: center; gap: 2rem; }
+    .hero-avatar { width: 180px; height: 180px; font-size: 4rem; }
+    .hero-btns { justify-content: center; }
+    .hero-desc { margin: 0 auto 2rem; }
+    .nav-links { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">Amith Gade</div>
+  <ul class="nav-links">
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#certs">Certifications</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#education">Education</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-text">
+    <div class="hero-badge">
+      <span></span> Open to opportunities in Dublin &amp; Remote
+    </div>
+    <h1>Hi, I'm <span>Amith</span><br>Software Engineer</h1>
+    <p class="hero-role">MSc Computing · Cloud &amp; Backend Developer</p>
+    <p class="hero-desc">
+      I build automation systems, cloud-native backends, and AI-powered tools.
+      MSc Computing graduate based in Dublin with 7× GCP certifications,
+      AWS CCP, and a passion for shipping things that work.
+    </p>
+    <div class="hero-btns">
+      <a href="#contact" class="btn-primary">Get in touch →</a>
+      <a href="https://github.com/amithreddygade" target="_blank" class="btn-secondary">⌥ View GitHub</a>
+    </div>
+  </div>
+  <div class="hero-avatar">AG</div>
+</div>
+
+<!-- STATS -->
+<div class="stats-bar">
+  <div class="stats-inner">
+    <div class="stat"><div class="stat-num">7×</div><div class="stat-label">GCP Certifications</div></div>
+    <div class="stat"><div class="stat-num">MSc</div><div class="stat-label">Computing Graduate</div></div>
+    <div class="stat"><div class="stat-num">11+</div><div class="stat-label">Bot Iterations Shipped</div></div>
+    <div class="stat"><div class="stat-num">100%</div><div class="stat-label">Mystery Shopper Score</div></div>
+    <div class="stat"><div class="stat-num">3+</div><div class="stat-label">Cloud Providers</div></div>
+  </div>
+</div>
+
+<!-- SKILLS -->
+<section id="skills">
+  <div class="section-inner">
+    <div class="section-tag">Skills</div>
+    <h2>Technical Skills</h2>
+    <p class="section-sub">Technologies I work with day to day</p>
+    <div class="skills-grid">
+
+      <div class="skill-card">
+        <div class="skill-card-icon" style="background:#eff6ff">💻</div>
+        <h3>Languages</h3>
+        <div class="tags">
+          <span class="tag blue">Python</span>
+          <span class="tag blue">JavaScript</span>
+          <span class="tag blue">C#</span>
+          <span class="tag blue">Java</span>
+          <span class="tag blue">C++</span>
+          <span class="tag blue">Bash</span>
+          <span class="tag blue">SQL</span>
+        </div>
+      </div>
+
+      <div class="skill-card">
+        <div class="skill-card-icon" style="background:#faf5ff">🔧</div>
+        <h3>Backend & APIs</h3>
+        <div class="tags">
+          <span class="tag purple">Flask</span>
+          <span class="tag purple">REST APIs</span>
+          <span class="tag purple">SQLite</span>
+          <span class="tag purple">PostgreSQL</span>
+          <span class="tag purple">JWT / OAuth</span>
+          <span class="tag purple">Async Processing</span>
+        </div>
+      </div>
+
+      <div class="skill-card">
+        <div class="skill-card-icon" style="background:#f0fdf4">☁️</div>
+        <h3>Cloud & DevOps</h3>
+        <div class="tags">
+          <span class="tag green">GCP</span>
+          <span class="tag green">AWS</span>
+          <span class="tag green">BigQuery</span>
+          <span class="tag green">Cloud Run</span>
+          <span class="tag green">Docker</span>
+          <span class="tag green">Git / CI/CD</span>
+          <span class="tag green">GCS</span>
+        </div>
+      </div>
+
+      <div class="skill-card">
+        <div class="skill-card-icon" style="background:#fff7ed">🤖</div>
+        <h3>AI & Automation</h3>
+        <div class="tags">
+          <span class="tag orange">Claude API</span>
+          <span class="tag orange">Prompt Engineering</span>
+          <span class="tag orange">RAG Concepts</span>
+          <span class="tag orange">Playwright</span>
+          <span class="tag orange">Gmail OAuth</span>
+          <span class="tag orange">Web Scraping</span>
+        </div>
+      </div>
+
+      <div class="skill-card">
+        <div class="skill-card-icon" style="background:#fef2f2">🧪</div>
+        <h3>Testing & Tools</h3>
+        <div class="tags">
+          <span class="tag">pytest</span>
+          <span class="tag">Playwright (E2E)</span>
+          <span class="tag">Unit Testing</span>
+          <span class="tag">Integration Testing</span>
+          <span class="tag">Postman</span>
+        </div>
+      </div>
+
+      <div class="skill-card">
+        <div class="skill-card-icon" style="background:#f0fdf4">📊</div>
+        <h3>Data & Databases</h3>
+        <div class="tags">
+          <span class="tag green">MongoDB</span>
+          <span class="tag green">PostgreSQL</span>
+          <span class="tag green">SQLite</span>
+          <span class="tag green">BigQuery</span>
+          <span class="tag green">Looker Studio</span>
+          <span class="tag green">Data Pipelines</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- CERTIFICATIONS -->
+<section id="certs">
+  <div class="section-inner">
+    <div class="section-tag">Certifications</div>
+    <h2>Certifications</h2>
+    <p class="section-sub">Industry-recognised cloud & AI credentials</p>
+    <div class="certs-grid">
+      <div class="cert-card">
+        <div class="cert-icon" style="background:#e8f5e9">🟢</div>
+        <div><h4>GCP Professional Cloud Architect</h4><p>Google Cloud · 2025</p></div>
+      </div>
+      <div class="cert-card">
+        <div class="cert-icon" style="background:#e8f5e9">🟢</div>
+        <div><h4>GCP Professional Data Engineer</h4><p>Google Cloud · 2025</p></div>
+      </div>
+      <div class="cert-card">
+        <div class="cert-icon" style="background:#e8f5e9">🟢</div>
+        <div><h4>GCP Associate Cloud Engineer</h4><p>Google Cloud · 2024</p></div>
+      </div>
+      <div class="cert-card">
+        <div class="cert-icon" style="background:#e8f5e9">🟢</div>
+        <div><h4>GCP Cloud Digital Leader</h4><p>Google Cloud · 2024</p></div>
+      </div>
+      <div class="cert-card">
+        <div class="cert-icon" style="background:#e8f5e9">🟢</div>
+        <div><h4>GCP + 3 Additional Certs</h4><p>Google Cloud · 2024–2025</p></div>
+      </div>
+      <div class="cert-card">
+        <div class="cert-icon" style="background:#fff3e0">🟠</div>
+        <div><h4>AWS Certified Cloud Practitioner</h4><p>Amazon Web Services · 2024</p></div>
+      </div>
+      <div class="cert-card">
+        <div class="cert-icon" style="background:#f3e5f5">🟣</div>
+        <div><h4>Anthropic Claude Code Certification</h4><p>Anthropic · March 2026</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects">
+  <div class="section-inner">
+    <div class="section-tag">Projects</div>
+    <h2>Featured Projects</h2>
+    <p class="section-sub">Things I've built from scratch</p>
+    <div class="projects-grid">
+
+      <div class="project-card p1">
+        <div class="project-label">🚀 Flagship Project</div>
+        <h3>AI Job Application Automation Bot</h3>
+        <p>A full-stack production system that scrapes job listings from multiple sources, scores them with Claude API, auto-fills applications via Playwright, and manages follow-ups via Gmail OAuth. Flask dashboard at localhost:5000 with SQLite persistence. 11+ production versions shipped.</p>
+        <div class="project-stack">
+          <span class="stack-pill">Python</span>
+          <span class="stack-pill">Claude API</span>
+          <span class="stack-pill">Flask</span>
+          <span class="stack-pill">Playwright</span>
+          <span class="stack-pill">SQLite</span>
+          <span class="stack-pill">Gmail OAuth</span>
+          <span class="stack-pill">GCP</span>
+        </div>
+        <a href="https://github.com/amithreddygade" target="_blank" class="project-link">View on GitHub →</a>
+      </div>
+
+      <div class="project-card p2">
+        <div class="project-label">🏥 BSc Final Project</div>
+        <h3>IoT Healthcare Monitoring System</h3>
+        <p>Real-time patient monitoring system using Arduino microcontrollers and GSM modules to transmit sensor data (heart rate, temperature, SpO2) to a remote dashboard. Built in C++ with low-level embedded firmware — designed for rural healthcare settings.</p>
+        <div class="project-stack">
+          <span class="stack-pill">C++</span>
+          <span class="stack-pill">Arduino</span>
+          <span class="stack-pill">GSM Module</span>
+          <span class="stack-pill">IoT</span>
+          <span class="stack-pill">Embedded Systems</span>
+        </div>
+        <a href="https://github.com/amithreddygade" target="_blank" class="project-link">View on GitHub →</a>
+      </div>
+
+      <div class="project-card p3">
+        <div class="project-label">☁️ Cloud Project</div>
+        <h3>GCP-Deployed Data Pipeline</h3>
+        <p>Cloud-native data pipeline running on GCP Compute Engine (Ubuntu Linux) with BigQuery integration, Cloud Storage, Secret Manager for secure credentials, and systemd-managed services. Processes thousands of records from multi-source scrapers with structured JSON storage.</p>
+        <div class="project-stack">
+          <span class="stack-pill">GCP</span>
+          <span class="stack-pill">BigQuery</span>
+          <span class="stack-pill">Python</span>
+          <span class="stack-pill">Cloud Storage</span>
+          <span class="stack-pill">Secret Manager</span>
+          <span class="stack-pill">Linux</span>
+        </div>
+        <a href="https://github.com/amithreddygade" target="_blank" class="project-link">View on GitHub →</a>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- EXPERIENCE -->
+<section id="experience">
+  <div class="section-inner">
+    <div class="section-tag">Experience</div>
+    <h2>Work Experience</h2>
+    <p class="section-sub">Where I've worked and what I've built</p>
+    <div class="timeline">
+
+      <div class="timeline-item">
+        <div class="timeline-dot"></div>
+        <div class="timeline-date">Jan 2026 – Present</div>
+        <div class="timeline-title">Supervisor</div>
+        <div class="timeline-company">Lagardère Travel Retail · Dublin Airport</div>
+        <div class="timeline-desc">
+          <ul>
+            <li>Promoted from Team Member within 12 months</li>
+            <li>Achieved 100% mystery shopper audit score</li>
+            <li>Managed shift operations and cross-functional team coordination</li>
+            <li>Delivered stakeholder reporting and operational improvements</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-dot" style="background: var(--green);box-shadow: 0 0 0 2px var(--green);"></div>
+        <div class="timeline-date">Jan 2026 – Present</div>
+        <div class="timeline-title">AI Automation Engineer (Personal Project)</div>
+        <div class="timeline-company">Job Application Bot · github.com/amithreddygade</div>
+        <div class="timeline-desc">
+          <ul>
+            <li>Architected and shipped a production-grade automation platform (11+ versions)</li>
+            <li>Integrated Claude API for intelligent ATS scoring and cover letter generation</li>
+            <li>Built REST API backend, SQLite persistence layer, and Flask management dashboard</li>
+            <li>Deployed on GCP with Secret Manager, Cloud Storage, and Compute Engine</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-dot" style="background: var(--purple);box-shadow: 0 0 0 2px var(--purple);"></div>
+        <div class="timeline-date">2021 – 2022</div>
+        <div class="timeline-title">Cybersecurity Intern</div>
+        <div class="timeline-company">Cisco · India</div>
+        <div class="timeline-desc">
+          <ul>
+            <li>Completed Cisco cybersecurity internship covering network security fundamentals</li>
+            <li>Worked on vulnerability assessment and security protocol implementation</li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- EDUCATION -->
+<section id="education">
+  <div class="section-inner">
+    <div class="section-tag">Education</div>
+    <h2>Education</h2>
+    <p class="section-sub">Academic background in Computer Science</p>
+    <div class="edu-grid">
+      <div class="edu-card">
+        <div class="edu-icon">🎓</div>
+        <div>
+          <h3>MSc Computing</h3>
+          <p>Griffith College Dublin · Ireland</p>
+          <span class="edu-year">Graduated Oct 2025</span>
+        </div>
+      </div>
+      <div class="edu-card">
+        <div class="edu-icon">🏛️</div>
+        <div>
+          <h3>BSc Computer Science Engineering</h3>
+          <p>Karunya Institute of Technology and Sciences · India</p>
+          <span class="edu-year">Graduated 2022</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="section-inner">
+    <div class="section-tag">Contact</div>
+    <h2>Let's Work Together</h2>
+    <p class="section-sub">Based in Dublin · Stamp 1G · No sponsorship required · Open to hybrid &amp; remote roles</p>
+    <div class="contact-grid">
+      <a href="mailto:amith.gade@gmail.com" class="contact-card">
+        <div class="contact-card-icon">✉️</div>
+        <div><h4>Email</h4><p>amith.gade@gmail.com</p></div>
+      </a>
+      <a href="tel:+353899734676" class="contact-card">
+        <div class="contact-card-icon">📞</div>
+        <div><h4>Phone</h4><p>+353 899 734 676</p></div>
+      </a>
+      <a href="https://linkedin.com/in/amithgade" target="_blank" class="contact-card">
+        <div class="contact-card-icon">💼</div>
+        <div><h4>LinkedIn</h4><p>linkedin.com/in/amithgade</p></div>
+      </a>
+      <a href="https://github.com/amithreddygade" target="_blank" class="contact-card">
+        <div class="contact-card-icon">⌥</div>
+        <div><h4>GitHub</h4><p>github.com/amithreddygade</p></div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p>Built by Amith Gade · Dublin, Ireland · 2026</p>
+</footer>
+
+</body>
+</html>
